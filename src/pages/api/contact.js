@@ -2,6 +2,11 @@ import nodemailer from "nodemailer";
 
 export const prerender = false;
 
+// En Vercel las variables llegan por process.env; en local (npm run dev) por import.meta.env desde .env
+function env(name) {
+  return process.env[name] ?? import.meta.env[name];
+}
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -25,21 +30,21 @@ export async function POST({ request }) {
     }
 
     const transporter = nodemailer.createTransport({
-      host: import.meta.env.SMTP_HOST,
-      port: Number(import.meta.env.SMTP_PORT),
-      secure: import.meta.env.SMTP_SECURE === "true",
+      host: env("SMTP_HOST"),
+      port: Number(env("SMTP_PORT")),
+      secure: env("SMTP_SECURE") === "true",
       auth: {
-        user: import.meta.env.SMTP_USER,
-        pass: import.meta.env.SMTP_PASS
+        user: env("SMTP_USER"),
+        pass: env("SMTP_PASS")
       }
     });
 
-    const fromAddress = `"slappyer.com" <${import.meta.env.SMTP_USER}>`;
+    const fromAddress = `"slappyer.com" <${env("SMTP_USER")}>`;
 
     // 1) Aviso interno con los datos del formulario
     await transporter.sendMail({
       from: fromAddress,
-      to: import.meta.env.CONTACT_TO,
+      to: env("CONTACT_TO"),
       replyTo: email,
       subject: `Nuevo contacto: ${name} - ${service}`,
       text: `Nombre: ${name}\nCorreo: ${email}\nServicio: ${service}\n\nMensaje:\n${message}`,

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "astro": "^5.2.0",
-    "@astrojs/node": "^9.0.0",
+    "@astrojs/vercel": "^8.2.11",
     "nodemailer": "^6.9.14"
   }
 }
