@@ -1,0 +1,362 @@
+---
+type ServiceItem = {
+  title: string;
+  description: string;
+  bullets: string[];
+  icon: "strategy" | "content" | "community" | "paid" | "event" | "audit";
+};
+
+const services: ServiceItem[] = [
+  {
+    title: "Estrategia de redes y posicionamiento",
+    description: "Defino una hoja de ruta clara para que tu marca gane visibilidad y recordacion.",
+    bullets: ["Diagnostico de marca y audiencia", "Pilares de contenido por objetivo", "Calendario de crecimiento medible"],
+    icon: "strategy"
+  },
+  {
+    title: "Creacion de contenido",
+    description: "Produccion de video corto, largo y UGC con foco en retencion, mensaje y conversion.",
+    bullets: ["Guion y narrativa por plataforma", "Grabacion y edicion premium", "Piezas listas para publicar"],
+    icon: "content"
+  },
+  {
+    title: "Community + gestion editorial",
+    description: "Manejo la conversacion diaria y la coherencia editorial para sostener el crecimiento.",
+    bullets: ["Planificacion semanal de contenidos", "Moderacion y respuestas estrategicas", "Reporte de insights accionables"],
+    icon: "community"
+  },
+  {
+    title: "Paid social orientado a conversion",
+    description: "Activo campañas en Meta y TikTok con creatividad y estructura pensadas para vender.",
+    bullets: ["Setup de campañas full-funnel", "Test A/B de audiencias y anuncios", "Optimizacion por CPA y ROAS"],
+    icon: "paid"
+  },
+  {
+    title: "Produccion para eventos",
+    description: "Cobertura en vivo y highlights para convertir cada evento en contenido de alto impacto.",
+    bullets: ["Cobertura en tiempo real", "Reels y clips de resumen", "Entrega rapida post-evento"],
+    icon: "event"
+  },
+  {
+    title: "Auditoria + plan de 30 dias",
+    description: "Detecto fricciones y te entrego quick wins para empezar a mejorar desde la primera semana.",
+    bullets: ["Revision de perfiles y embudos", "Plan accionable de 30 dias", "Prioridades por impacto"],
+    icon: "audit"
+  }
+];
+
+const proofMetrics = [
+  { value: "+180%", label: "engagement promedio" },
+  { value: "+240%", label: "trafico social a web" },
+  { value: "+95K", label: "alcance organico mensual" },
+  { value: "3.2x", label: "retorno medio en paid social" }
+];
+---
+
+<section class="services" id="servicios" aria-labelledby="services-title">
+  <div class="container services-shell">
+    <div class="services-head reveal">
+      <span class="section-label">Servicios</span>
+      <h2 id="services-title">Servicios que convierten contenido en crecimiento</h2>
+      <p>
+        Trabajo con marcas, tiendas, eventos, startups y negocios que quieren crecer con contenido
+        estrategico, ejecucion premium y performance medible.
+      </p>
+    </div>
+
+    <div class="proof-strip reveal" aria-label="Metricas de resultados">
+      {
+        proofMetrics.map((item) => (
+          <article class="proof-item">
+            <strong>{item.value}</strong>
+            <span>{item.label}</span>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="services-grid" role="list">
+      {
+        services.map((service, index) => (
+          <article class="service-card reveal" role="listitem" style={`--reveal-delay:${index * 60}ms`}>
+            <div class="service-icon" aria-hidden="true">
+              {service.icon === "strategy" && (
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 19h16M5 15l4-4 3 3 7-7" />
+                  <path d="M14 7h5v5" />
+                </svg>
+              )}
+              {service.icon === "content" && (
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="14" height="14" rx="2" />
+                  <path d="m10 10 4 2-4 2v-4Z" />
+                  <path d="M19 8h2v8h-2" />
+                </svg>
+              )}
+              {service.icon === "community" && (
+                <svg viewBox="0 0 24 24">
+                  <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0Z" />
+                  <path d="M4 20a8 8 0 0 1 16 0" />
+                </svg>
+              )}
+              {service.icon === "paid" && (
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 7h16M4 12h16M4 17h10" />
+                  <circle cx="18" cy="17" r="3" />
+                </svg>
+              )}
+              {service.icon === "event" && (
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m10 10 5 2-5 2v-4Z" />
+                </svg>
+              )}
+              {service.icon === "audit" && (
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 5h16v14H4z" />
+                  <path d="M8 10h8M8 14h5" />
+                  <circle cx="17.5" cy="16.5" r="2.5" />
+                </svg>
+              )}
+            </div>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+            <ul>
+              {service.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const revealItems = document.querySelectorAll(".services .reveal");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  revealItems.forEach((item) => observer.observe(item));
+</script>
+
+<style>
+  .services {
+    --services-bg: #f6f5f2;
+    --services-surface: rgba(255, 255, 255, 0.72);
+    --services-text: #121212;
+    --services-muted: #595855;
+    --services-border: rgba(18, 18, 18, 0.08);
+    --services-shadow: 0 10px 28px rgba(12, 12, 12, 0.06);
+    --services-accent: #7aa2ff;
+    position: relative;
+    background: radial-gradient(circle at 85% 4%, rgba(122, 162, 255, 0.08), transparent 36%), var(--services-bg);
+    padding: clamp(4rem, 8vw, 6.6rem) 0;
+  }
+
+  .services-shell {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .services-head {
+    max-width: 840px;
+  }
+
+  .services-head h2 {
+    margin: 0.55rem 0 0.85rem;
+    font-size: clamp(1.9rem, 3.9vw, 3rem);
+    letter-spacing: -0.03em;
+    color: var(--services-text);
+    text-wrap: balance;
+  }
+
+  .services-head p {
+    margin: 0;
+    max-width: 730px;
+    font-size: 1.04rem;
+    color: var(--services-muted);
+  }
+
+  .proof-strip {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .proof-item {
+    grid-column: span 3;
+    border: 1px solid var(--services-border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 0.9rem 1rem;
+  }
+
+  .proof-item strong {
+    display: block;
+    color: var(--services-text);
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .proof-item span {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--services-muted);
+    font-size: 0.86rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .service-card {
+    grid-column: span 4;
+    min-height: 100%;
+    border: 1px solid var(--services-border);
+    border-radius: 20px;
+    padding: 1.2rem 1.2rem 1.15rem;
+    background: var(--services-surface);
+    backdrop-filter: blur(6px);
+    box-shadow: var(--services-shadow);
+    transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(122, 162, 255, 0.33);
+    box-shadow: 0 16px 34px rgba(12, 12, 12, 0.09);
+  }
+
+  .service-icon {
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 10px;
+    border: 1px solid rgba(122, 162, 255, 0.32);
+    color: #2f4c8e;
+    background: rgba(122, 162, 255, 0.1);
+    display: grid;
+    place-items: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .service-icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .service-card h3 {
+    margin: 0;
+    color: var(--services-text);
+    font-size: 1.04rem;
+    line-height: 1.35;
+  }
+
+  .service-card p {
+    margin: 0.52rem 0 0.72rem;
+    color: var(--services-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .service-card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.42rem;
+  }
+
+  .service-card li {
+    color: #2f2f2d;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .service-card li::before {
+    content: "";
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 999px;
+    background: var(--services-accent);
+    position: absolute;
+    left: 0;
+    top: 0.46rem;
+  }
+
+  .services :global(a:focus-visible),
+  .services :global(button:focus-visible) {
+    outline: 2px solid #3f64bb;
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 960px) {
+    .proof-item,
+    .service-card {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .services {
+      padding: 3.6rem 0;
+    }
+
+    .proof-strip,
+    .services-grid {
+      gap: 0.8rem;
+    }
+
+    .proof-item,
+    .service-card {
+      grid-column: span 12;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .service-card {
+      transition: none;
+    }
+  }
+</style>

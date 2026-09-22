@@ -1,0 +1,109 @@
+---
+const aboutData = {
+  headline: "Mi enfoque",
+  paragraphs: [
+    "Creci dentro del deporte, espacios donde la evolucion depende de la practica constante y la capacidad de adaptarse.",
+    "En marketing y contenido encontre el mismo principio: estrategia clara, ejecucion diaria y mejora continua.",
+    "Trabajo con marcas, startups, negocios y eventos que necesitan crecer con una comunicacion solida y accion concreta.",
+    "Aplico mentalidad de triatleta al negocio: medir, ajustar y sostener procesos que se traducen en resultados reales."
+  ],
+  quote: "La consistencia construye resultados. En el deporte y en los negocios.",
+  pillars: [
+    {
+      title: "Estrategia",
+      description: "Direccion definida, objetivos claros y decisiones con criterio."
+    },
+    {
+      title: "Creacion",
+      description: "Contenido con intencion, narrativa clara y estetica consistente."
+    },
+    {
+      title: "Disciplina",
+      description: "Sistema, ritmo y ejecucion constante para sostener resultados."
+    }
+  ],
+  stats: [
+    { value: "8+", label: "anos de experiencia" },
+    { value: "120+", label: "proyectos" },
+    { value: "35+", label: "marcas y eventos" }
+  ],
+  cta: {
+    label: "Conocer mis servicios",
+    href: "#servicios"
+  }
+};
+---
+
+<section class="section about-premium" id="sobre-mi" aria-labelledby="about-title">
+  <div class="about-bg-shape about-bg-shape-a" aria-hidden="true"></div>
+  <div class="about-bg-shape about-bg-shape-b" aria-hidden="true"></div>
+
+  <div class="container about-grid-12">
+    <aside class="about-visual reveal-on-scroll" aria-hidden="true">
+      <div class="about-visual-inner">
+        <img
+          class="about-visual-media"
+          src="/images/hero%20image.jpeg"
+          alt="Retrato personal"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </aside>
+
+    <article class="about-copy reveal-on-scroll">
+      <h2 id="about-title">{aboutData.headline}</h2>
+
+      <div class="about-story">
+        {aboutData.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <blockquote class="about-quote">{aboutData.quote}</blockquote>
+
+      <div class="about-pillars" role="list" aria-label="Diferenciales">
+        {
+          aboutData.pillars.map((pillar) => (
+            <article class="about-pillar" role="listitem">
+              <h3>{pillar.title}</h3>
+              <p>{pillar.description}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="about-stats" aria-label="Credibilidad">
+        {
+          aboutData.stats.map((stat) => (
+            <p>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </p>
+          ))
+        }
+      </div>
+
+      <a class="btn about-cta" href={aboutData.cta.href}>{aboutData.cta.label}</a>
+    </article>
+  </div>
+</section>
+
+<script>
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reducedMotion) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll(".reveal-on-scroll").forEach((element) => observer.observe(element));
+  } else {
+    document.querySelectorAll(".reveal-on-scroll").forEach((element) => element.classList.add("is-visible"));
+  }
+</script>

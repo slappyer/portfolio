@@ -1,0 +1,240 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="https://slappyer.com/" aria-label="Ir al inicio de slappyer">
+      <img
+        src="https://slappyer.com/wp-content/uploads/2024/05/cropped-logo-slappyer.png"
+        alt="slappyer logo"
+        class="brand-logo"
+      />
+    </a>
+    <nav aria-label="Principal" class="main-nav">
+      <ul class="header-menu">
+        <li><a class="header-link" href="#top">HOME</a></li>
+        <li><a class="header-link" href="#servicios">SERVICIOS</a></li>
+        <li class="has-dropdown">
+          <button class="dropdown-toggle" type="button" aria-expanded="false">
+            SOCIAL
+          </button>
+          <ul class="dropdown-menu" aria-label="Enlaces de perfil">
+            <li><a href="https://instagram.com/slappyer" target="_blank" rel="noreferrer">Instagram</a></li>
+            <li><a href="https://tiktok.com/@slappyer" target="_blank" rel="noreferrer">TikTok</a></li>
+            <li><a href="https://youtube.com/@slappyer" target="_blank" rel="noreferrer">YouTube</a></li>
+            <li><a href="https://strava.app.link/jT6YxWuGT0b" target="_blank" rel="noreferrer">Strava</a></li>
+            <li><a href="https://www.linkedin.com/in/rafael-andres-velasco/" target="_blank" rel="noreferrer">LinkedIn</a></li>
+          </ul>
+        </li>
+        <li><a class="header-link" href="#contact-form">CONTACTO</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta-wrap">
+      <a class="header-cta" href="#contact-form">&iquest;Hablamos?</a>
+      <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <ul class="mobile-nav-menu">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="mobile-nav-social">
+      <a href="https://instagram.com/slappyer" target="_blank" rel="noreferrer">Instagram</a>
+      <a href="https://tiktok.com/@slappyer" target="_blank" rel="noreferrer">TikTok</a>
+      <a href="https://youtube.com/@slappyer" target="_blank" rel="noreferrer">YouTube</a>
+      <a href="https://strava.app.link/jT6YxWuGT0b" target="_blank" rel="noreferrer">Strava</a>
+      <a href="https://www.linkedin.com/in/rafael-andres-velasco/" target="_blank" rel="noreferrer">LinkedIn</a>
+    </div>
+    <a class="btn mobile-nav-cta" href="#contact-form">&iquest;Hablamos?</a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector(".site-header");
+
+  if (header) {
+    const updateHeaderState = () => {
+      if (window.scrollY > 24) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    };
+
+    updateHeaderState();
+    window.addEventListener("scroll", updateHeaderState, { passive: true });
+  }
+
+  const navToggle = document.querySelector(".nav-toggle");
+  const mobileNav = document.getElementById("mobile-nav");
+
+  if (navToggle && mobileNav) {
+    const closeMenu = () => {
+      mobileNav.classList.remove("is-open");
+      navToggle.classList.remove("is-active");
+      navToggle.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("nav-open");
+    };
+
+    const openMenu = () => {
+      mobileNav.classList.add("is-open");
+      navToggle.classList.add("is-active");
+      navToggle.setAttribute("aria-expanded", "true");
+      document.body.classList.add("nav-open");
+    };
+
+    navToggle.addEventListener("click", () => {
+      if (mobileNav.classList.contains("is-open")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    mobileNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 900) closeMenu();
+    });
+  }
+</script>
+
+<style>
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 110;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .nav-toggle.is-active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-toggle.is-active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle.is-active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    padding: calc(var(--header-h) + 1.5rem) 1.75rem 2.5rem;
+    background: rgba(8, 8, 8, 0.98);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    overflow-y: auto;
+  }
+
+  .mobile-nav.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .mobile-nav-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .mobile-nav-menu a {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .mobile-nav-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.4rem;
+  }
+
+  .mobile-nav-social a {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .mobile-nav-cta {
+    justify-self: start;
+    display: inline-flex;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.9rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  @media (min-width: 901px) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .main-nav,
+    .header-cta {
+      display: none;
+    }
+
+    .header-cta-wrap {
+      width: auto;
+    }
+
+    .nav-toggle {
+      display: inline-flex;
+    }
+
+    .header-inner {
+      grid-template-columns: auto 1fr auto;
+    }
+  }
+
+  :global(body.nav-open) {
+    overflow: hidden;
+  }
+</style>

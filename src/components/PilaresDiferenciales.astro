@@ -1,0 +1,106 @@
+---
+const pilares = [
+  {
+    id: "estrategia",
+    titulo: "Estrategia",
+    descripcion: "Pensamiento analitico, posicionamiento y decisiones orientadas a resultados.",
+    icono: "estrategia"
+  },
+  {
+    id: "creacion",
+    titulo: "Creacion",
+    descripcion: "Produccion de contenido real, visual y adaptado a plataformas actuales.",
+    icono: "creacion"
+  },
+  {
+    id: "disciplina",
+    titulo: "Disciplina",
+    descripcion: "Consistencia, enfoque y mentalidad de mejora continua aplicada al trabajo.",
+    icono: "disciplina"
+  }
+];
+---
+
+<section class="section pillars-premium" id="pilares" aria-labelledby="pilares-title">
+  <div class="pillars-shape pillars-shape-a" aria-hidden="true"></div>
+  <div class="pillars-shape pillars-shape-b" aria-hidden="true"></div>
+
+  <div class="container">
+    <header class="pillars-head reveal-on-scroll">
+      <p class="pillars-label">
+        <span class="pillars-label-line"></span>
+        Pilares
+      </p>
+      <h2 id="pilares-title">Mis pilares diferenciales</h2>
+      <p class="pillars-subtitle">
+        Combino estrategia, creacion y disciplina para construir resultados solidos y sostenibles.
+      </p>
+    </header>
+
+    <div class="pillars-grid" role="list" aria-label="Pilares diferenciales">
+      {
+        pilares.map((pilar) => (
+          <article class="pillars-card reveal-on-scroll" role="listitem" key={pilar.id}>
+            <span class="pillars-card-topline" aria-hidden="true"></span>
+            <span class="pillars-icon" aria-hidden="true">
+              {
+                pilar.icono === "estrategia" && (
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 19H20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+                    <path d="M6 15L10 11L13 13L18 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <circle cx="6" cy="15" r="1" fill="currentColor"></circle>
+                    <circle cx="10" cy="11" r="1" fill="currentColor"></circle>
+                    <circle cx="13" cy="13" r="1" fill="currentColor"></circle>
+                    <circle cx="18" cy="8" r="1" fill="currentColor"></circle>
+                  </svg>
+                )
+              }
+              {
+                pilar.icono === "creacion" && (
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="4.5" y="5" width="15" height="14" rx="2.5" stroke="currentColor" stroke-width="1.7"></rect>
+                    <path d="M8 14L11 11L13 13L16 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <circle cx="9" cy="9" r="1" fill="currentColor"></circle>
+                  </svg>
+                )
+              }
+              {
+                pilar.icono === "disciplina" && (
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"></circle>
+                    <path d="M12 8V12L14.8 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                )
+              }
+            </span>
+            <h3>{pilar.titulo}</h3>
+            <p>{pilar.descripcion}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const items = document.querySelectorAll(".pillars-premium .reveal-on-scroll");
+
+  if (reduceMotion) {
+    items.forEach((node) => node.classList.add("is-visible"));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    items.forEach((node) => observer.observe(node));
+  }
+</script>

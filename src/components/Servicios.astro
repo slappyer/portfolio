@@ -1,0 +1,354 @@
+---
+type ServicePackage = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  forWho: string;
+  whatYouGet: string;
+  deliverables: string[];
+  footnote: string;
+};
+
+const packages: ServicePackage[] = [
+  {
+    eyebrow: "Diagnóstico y Estrategia",
+    title: "Diagnóstico y Estrategia Social",
+    description: "Auditoría de tus redes y plan de contenido accionable en 15-20 días.",
+    forWho: "Para marcas, negocios o creadores que quieren ordenar su presencia en redes o no saben por dónde empezar.",
+    whatYouGet: "Sales con un plan claro: qué contar, en qué formatos, con qué frecuencia y con qué objetivos, listo para ejecutar desde el día siguiente.",
+    deliverables: [
+      "Auditoría de tus perfiles y contenido actual",
+      "Análisis de audiencia y referentes del sector",
+      "Definición de pilares de contenido y tono de marca",
+      "Calendario editorial para 90 días",
+      "Recomendaciones de formato por plataforma (Reels, TikTok, Stories)"
+    ],
+    footnote: "Duración: 15-20 días · Trabajo directo conmigo · 1 sesión semanal de seguimiento"
+  },
+  {
+    eyebrow: "Producción y Eventos",
+    title: "Producción de Contenido y Cobertura de Eventos",
+    description: "Grabación y edición profesional, en directo o en campaña puntual.",
+    forWho: "Para marcas, eventos o clientes que necesitan contenido grabado y editado con calidad, ya sea una campaña concreta o cobertura en vivo de un evento.",
+    whatYouGet: "Contenido nativo de redes sociales, grabado y editado por mí de principio a fin, con entrega rápida y formato listo para publicar.",
+    deliverables: [
+      "Guion o narrativa según el objetivo de la pieza",
+      "Grabación en directo (evento, campaña o producto)",
+      "Edición y montaje de reels, clips y highlights",
+      "Adaptación de formatos por plataforma",
+      "Entrega en 24-48h tras el evento o grabación"
+    ],
+    footnote: "Duración: según campaña o evento · Un único interlocutor (yo) · Reporting al cierre"
+  },
+  {
+    eyebrow: "Always-on",
+    title: "Social Media & Community Management",
+    description: "Gestión continua de redes y comunidad, como si fuera tu equipo interno.",
+    forWho: "Para marcas que ya tienen presencia en redes y necesitan consistencia mensual: contenido, gestión de comunidad y estrategia sin montar un equipo propio.",
+    whatYouGet: "Presencia social constante y con criterio estratégico, combinando gestión de comunidad, creación de contenido y ejecución de campañas de marketing adaptadas a tus objetivos.",
+    deliverables: [
+      "Estrategia y calendario editorial mensual",
+      "Producción y edición de contenido para tus canales",
+      "Community management diario (respuestas, moderación, interacción)",
+      "Diseño y seguimiento de campañas puntuales de marketing",
+      "Reporting mensual con resultados y siguientes pasos"
+    ],
+    footnote: "Compromiso: mensual, sin permanencia mínima larga · Acceso directo conmigo · Plazas limitadas"
+  }
+];
+---
+
+<section class="section services-section" id="servicios" aria-labelledby="services-title">
+  <div class="container services-top">
+    <h2 id="services-title" class="services-title">
+      TRES FORMAS DE<br />TRABAJAR CONMIGO
+    </h2>
+    <div class="services-intro">
+      <p>Según el momento en el que esté tu marca y lo que necesites: estrategia, producción o gestión continua.</p>
+      <a class="services-cta" href="#contact-form">Hablemos</a>
+    </div>
+  </div>
+
+  <div class="container services-grid">
+    {
+      packages.map((pkg) => (
+        <article class="service-package reveal-on-scroll">
+          <span class="service-eyebrow">{pkg.eyebrow}</span>
+          <h3>{pkg.title}</h3>
+          <p class="service-desc">{pkg.description}</p>
+
+          <div class="service-block">
+            <span class="service-label">Para quién es</span>
+            <p>{pkg.forWho}</p>
+          </div>
+
+          <div class="service-block">
+            <span class="service-label">Qué consigues</span>
+            <p>{pkg.whatYouGet}</p>
+          </div>
+
+          <div class="service-block">
+            <span class="service-label">Entregables</span>
+            <ul class="service-deliverables">
+              {pkg.deliverables.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+
+          <p class="service-footnote">{pkg.footnote}</p>
+
+          <a class="service-cta" href="#contact-form">Quiero esta oferta</a>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const revealItems = document.querySelectorAll(".services-section .reveal-on-scroll");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduceMotion) {
+    revealItems.forEach((node) => node.classList.add("is-visible"));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealItems.forEach((node) => observer.observe(node));
+  }
+</script>
+
+<style>
+  .services-section {
+    background: var(--bg);
+  }
+
+  .services-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+  }
+
+  .services-title {
+    margin: 0;
+    font-family: "Barlow", sans-serif;
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .services-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.3rem;
+    max-width: 380px;
+    text-align: right;
+  }
+
+  .services-intro p {
+    margin: 0;
+    color: var(--text);
+    font-family: "Barlow", sans-serif;
+    font-weight: 700;
+    font-size: 1.375rem;
+    line-height: 1.3;
+  }
+
+  .services-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 1.9rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .services-cta:hover {
+    background: #e04a1f;
+    transform: translateY(-2px);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem;
+  }
+
+  .service-package {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem 1.8rem;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .service-package.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .service-package:hover {
+    border-color: rgba(255, 90, 43, 0.35);
+    box-shadow: 0 16px 34px rgba(12, 12, 12, 0.07);
+  }
+
+  .service-eyebrow {
+    display: inline-block;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+  }
+
+  .service-package h3 {
+    margin: 0 0 0.6rem;
+    font-family: "Barlow", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--text);
+  }
+
+  .service-desc {
+    margin: 0 0 1.4rem;
+    color: var(--muted);
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .service-block {
+    margin-bottom: 1.2rem;
+  }
+
+  .service-label {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+
+  .service-block p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .service-deliverables {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.42rem;
+  }
+
+  .service-deliverables li {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.45;
+    padding-left: 1.05rem;
+    position: relative;
+  }
+
+  .service-deliverables li::before {
+    content: "";
+    width: 0.36rem;
+    height: 0.36rem;
+    border-radius: 999px;
+    background: var(--accent);
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+  }
+
+  .service-footnote {
+    margin: 0.4rem 0 1.4rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  .service-cta {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.4rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-weight: 800;
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .service-cta:hover {
+    background: #e04a1f;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 960px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .services-top {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .services-intro {
+      align-items: flex-start;
+      text-align: left;
+      max-width: none;
+    }
+
+    .service-package {
+      padding: 1.5rem 1.3rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-package {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

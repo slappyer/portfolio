@@ -1,0 +1,78 @@
+<section class="section help">
+  <div class="container help-top">
+    <h2 class="help-title">CÓMO PUEDO<br />AYUDARTE</h2>
+    <div class="help-intro">
+      <p>Me enfoco incansablemente en una sola cosa: hacer crecer tu marca a través de la relevancia.</p>
+      <a class="help-cta" href="#contact-form">Aprende más</a>
+    </div>
+  </div>
+
+  <div class="container help-carousel">
+    <button class="help-arrow help-arrow-prev" type="button" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+    </button>
+
+    <div class="help-cards" id="help-cards">
+      <article class="help-card">
+        <div class="help-card-media help-card-media--portrait">
+          <img src="/images/rafa-sofa.png" alt="Rafa creando contenido" loading="lazy" />
+        </div>
+        <span class="help-eyebrow">Construyendo Relevancia</span>
+        <h3>Creatividad</h3>
+        <p>
+          Creo contenido que la gente realmente quiere ver, escuchando a las audiencias y no las
+          opiniones. Me centro en aportar valor real a la comunidad con una narrativa nativa de
+          redes sociales.
+        </p>
+      </article>
+
+      <article class="help-card">
+        <div class="help-card-media help-card-media--portrait">
+          <img src="/images/media-laureus.jpg" alt="Rafa como YouTube Manager en Laureus Media" loading="lazy" />
+        </div>
+        <span class="help-eyebrow">Alcance Amplificado</span>
+        <h3>Medios</h3>
+        <p>
+          Cada red social es diferente, así que adapto cada contenido a su formato y audiencia.
+          Me enfoco en captar la atención y aportar relevancia real para cada cliente.
+        </p>
+      </article>
+
+      <article class="help-card">
+        <div class="help-card-media help-card-media--portrait">
+          <img src="/images/strategy-track.jpg" alt="Zapatillas de atletismo en una pista deportiva" loading="lazy" />
+        </div>
+        <span class="help-eyebrow">Impacto Dirigido</span>
+        <h3>Estrategia</h3>
+        <p>
+          Priorizando una comunicación transparente y directa, diseño una estrategia que se
+          ajusta y mejora constantemente según los cambios del marketing. Superviso cada paso de
+          cerca para asegurar resultados reales y una relación de confianza a largo plazo.
+        </p>
+      </article>
+    </div>
+
+    <button class="help-arrow help-arrow-next" type="button" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+    </button>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById("help-cards");
+  const prevBtn = document.querySelector(".help-arrow-prev");
+  const nextBtn = document.querySelector(".help-arrow-next");
+
+  if (track && prevBtn && nextBtn) {
+    const scrollByCard = (dir: number) => {
+      const card = track.querySelector(".help-card");
+      const styles = getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap || "0");
+      const amount = card ? card.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+      track.scrollBy({ left: dir * amount, behavior: "smooth" });
+    };
+
+    prevBtn.addEventListener("click", () => scrollByCard(-1));
+    nextBtn.addEventListener("click", () => scrollByCard(1));
+  }
+</script>

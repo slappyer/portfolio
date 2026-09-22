@@ -1,0 +1,488 @@
+---
+type ProjectItem = {
+  id: string;
+  title: string;
+  role: string;
+  description: string;
+  impact?: string;
+  category: "Contenido" | "Estrategia" | "Evento" | "Branding" | "Colaboracion";
+  image: string;
+  imageAlt: string;
+  href?: string;
+  featured?: boolean;
+};
+
+const projects: ProjectItem[] = [
+  {
+    id: "laureus-youtube-manager",
+    title: "Laureus World Sports Awards 2025",
+    role: "YouTube Manager",
+    description:
+      "Responsable de YouTube en el equipo de medios de Laureus. Gestion de contenido, optimizacion y publicacion en su canal oficial.",
+    impact: "Cobertura premium para evento internacional",
+    category: "Evento",
+    image: "https://slappyer.com/wp-content/uploads/2025/04/IMG_0320-1-scaled.jpg",
+    imageAlt: "Laureus World Sports Awards 2025",
+    href: "https://www.laureus.com/world-sports-awards",
+    featured: true
+  },
+  {
+    id: "criptomonedas-contenido",
+    title: "Criptomonedas.es",
+    role: "Productor de contenido",
+    description:
+      "Estrategia y produccion de contenido para redes sociales, con foco en guion, edicion de video y piezas generadas con IA.",
+    impact: "Sistema de contenido continuo multiplataforma",
+    category: "Contenido",
+    image:
+      "https://slappyer.com/wp-content/uploads/elementor/thumbs/Captura-de-pantalla-2025-10-26-143227-rds07n3ofh8zmhrlu0nby7ttiyuxv0xdaxcvzyveeo.png",
+    imageAlt: "Criptomonedas.es",
+    href: "https://criptomonedas.es",
+    featured: true
+  },
+  {
+    id: "shinner-social-creative",
+    title: "Shinner App",
+    role: "Social Media Creative",
+    description:
+      "Estrategia digital para la app y produccion de contenido para redes: grabacion, edicion y publicacion.",
+    category: "Estrategia",
+    image: "https://slappyer.com/wp-content/uploads/2024/07/Captura-de-pantalla-2024-07-27-232906-1024x632.png",
+    imageAlt: "Shinner App",
+    href: "https://shinner.app"
+  },
+  {
+    id: "avant-garde-branding",
+    title: "Avant Garde SkateShop",
+    role: "Branding",
+    description:
+      "Desarrollo web con WordPress, mantenimiento de e-commerce y estrategia de contenido para web y redes.",
+    impact: "Crecimiento de 0 a 70.000 seguidores en 1 ano",
+    category: "Branding",
+    image:
+      "https://slappyer.com/wp-content/uploads/elementor/thumbs/Captura-de-pantalla-2024-07-27-234040-qrquiz2ct4x5w5bhmytbty1izm4zdghmolnktmvv00.png",
+    imageAlt: "Avant Garde SkateShop"
+  },
+  {
+    id: "guy-laroche-colab",
+    title: "Guy Laroche",
+    role: "Colaboracion",
+    description:
+      "Colaboracion con la marca de perfumes Guy Laroche para una publicacion y stories promocionando su fragancia como triatleta.",
+    category: "Colaboracion",
+    image:
+      "https://slappyer.com/wp-content/uploads/elementor/thumbs/guynlaroche-qrqtby0by610bnm3g3j138iaofkjh2lzllh441iue0.png",
+    imageAlt: "Guy Laroche",
+    href: "https://www.instagram.com/p/DALQL45tFxF/"
+  },
+  {
+    id: "slappy-challenge-event",
+    title: "Slappy Challenge 2024",
+    role: "Creador de contenido en redes",
+    description:
+      "Creacion de contenido para Wall Street Skate Shop y Film Trucks durante Slappy Challenge 2024 en Lyon, Francia.",
+    impact: "7 piezas y mas de 100.000 visualizaciones",
+    category: "Evento",
+    image:
+      "https://slappyer.com/wp-content/uploads/2024/07/en-skateboard-les-slappies-sont-des-figures-montees-et-glissees-sur-des-trottoirs-sans-sauter-simplement-en-utilisant-des-points-de-pression-photo-cyril-lestage-1726950282-1024x836.jpg",
+    imageAlt: "Slappy Challenge 2024",
+    href: "https://www.instagram.com/reel/C9KIG3ZNFRB/"
+  }
+];
+
+const filters = ["Todos", "Contenido", "Estrategia", "Evento", "Branding", "Colaboracion"] as const;
+---
+
+<section class="section portfolio-premium" id="portfolio" aria-labelledby="portfolio-title">
+  <div class="container portfolio-shell">
+    <header class="portfolio-head reveal-on-scroll">
+      <p class="portfolio-label">
+        <span class="portfolio-label-line"></span>
+        Portfolio
+      </p>
+      <h2 id="portfolio-title">Proyectos que combinan estrategia, contenido y ejecucion real</h2>
+      <p>
+        Seleccion de trabajos con marcas, startups y eventos donde convergen direccion creativa,
+        performance y consistencia operativa.
+      </p>
+    </header>
+
+    <div class="portfolio-filters reveal-on-scroll" role="toolbar" aria-label="Filtrar proyectos por categoria">
+      {
+        filters.map((filter, index) => (
+          <button
+            type="button"
+            class={`portfolio-filter ${index === 0 ? "is-active" : ""}`}
+            data-filter={filter}
+            aria-pressed={index === 0 ? "true" : "false"}
+          >
+            {filter}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="portfolio-premium-grid" role="list" aria-label="Listado de proyectos">
+      {
+        projects.map((project, index) => {
+          const Wrapper = project.href ? "a" : "div";
+
+          return (
+            <article
+              class={`portfolio-item reveal-on-scroll ${project.featured ? "is-featured" : ""}`}
+              role="listitem"
+              data-category={project.category}
+              style={`--reveal-delay:${index * 60}ms`}
+            >
+              {project.featured && <span class="portfolio-badge">Featured</span>}
+
+              <Wrapper
+                class="portfolio-media"
+                href={project.href}
+                target={project.href ? "_blank" : undefined}
+                rel={project.href ? "noreferrer" : undefined}
+                aria-label={project.href ? `Ver proyecto ${project.title}` : undefined}
+              >
+                <img src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" />
+                <div class="portfolio-overlay" aria-hidden="true">
+                  <span class="portfolio-chip">{project.category}</span>
+                  <strong>{project.title}</strong>
+                  <span class="portfolio-overlay-cta">{project.href ? "Ver proyecto" : "Ver detalle"}</span>
+                </div>
+              </Wrapper>
+
+              <div class="portfolio-content">
+                <h3>{project.title}</h3>
+                <p class="portfolio-role">{project.role}</p>
+                <p>{project.description}</p>
+                {project.impact && <p class="portfolio-impact">{project.impact}</p>}
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const portfolioSection = document.querySelector(".portfolio-premium");
+  const filterButtons = portfolioSection?.querySelectorAll(".portfolio-filter");
+  const portfolioItems = portfolioSection?.querySelectorAll(".portfolio-item");
+  const revealItems = portfolioSection?.querySelectorAll(".reveal-on-scroll");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (filterButtons && portfolioItems) {
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedFilter = button.getAttribute("data-filter");
+
+        filterButtons.forEach((item) => {
+          item.classList.remove("is-active");
+          item.setAttribute("aria-pressed", "false");
+        });
+
+        button.classList.add("is-active");
+        button.setAttribute("aria-pressed", "true");
+
+        portfolioItems.forEach((card) => {
+          const cardCategory = card.getAttribute("data-category");
+          const shouldShow = selectedFilter === "Todos" || cardCategory === selectedFilter;
+
+          card.classList.toggle("is-hidden", !shouldShow);
+        });
+      });
+    });
+  }
+
+  if (revealItems) {
+    if (reduceMotion) {
+      revealItems.forEach((node) => node.classList.add("is-visible"));
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      revealItems.forEach((node) => observer.observe(node));
+    }
+  }
+</script>
+
+<style>
+  .portfolio-premium {
+    background: #f8f8f6;
+    position: relative;
+  }
+
+  .portfolio-shell {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .portfolio-head {
+    max-width: 760px;
+  }
+
+  .portfolio-label {
+    margin: 0 0 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #65615d;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-weight: 600;
+  }
+
+  .portfolio-label-line {
+    width: 1px;
+    height: 14px;
+    background: #918d89;
+  }
+
+  .portfolio-head h2 {
+    margin: 0;
+    font-size: clamp(1.9rem, 4vw, 3.3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .portfolio-head p {
+    margin: 0.9rem 0 0;
+    max-width: 62ch;
+    color: #615d5a;
+  }
+
+  .portfolio-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .portfolio-filter {
+    border: 1px solid #ddd7d0;
+    background: rgba(255, 255, 255, 0.78);
+    color: #3f3d3b;
+    border-radius: 999px;
+    padding: 0.45rem 0.88rem;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+  }
+
+  .portfolio-filter:hover {
+    border-color: #c3bbb3;
+    background: #fff;
+  }
+
+  .portfolio-filter.is-active {
+    background: #1d1d1c;
+    color: #fff;
+    border-color: #1d1d1c;
+  }
+
+  .portfolio-premium-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .portfolio-item {
+    position: relative;
+    border: 1px solid #e2ddd7;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 10px 30px rgba(18, 18, 18, 0.06);
+    overflow: hidden;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  }
+
+  .portfolio-item:hover {
+    transform: translateY(-4px);
+    border-color: #cbc3bb;
+    box-shadow: 0 16px 40px rgba(18, 18, 18, 0.1);
+  }
+
+  .portfolio-item.is-hidden {
+    display: none;
+  }
+
+  .portfolio-badge {
+    position: absolute;
+    z-index: 3;
+    top: 0.72rem;
+    left: 0.72rem;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    background: rgba(20, 20, 20, 0.65);
+    color: #fff;
+    padding: 0.26rem 0.56rem;
+    font-size: 0.69rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 999px;
+  }
+
+  .portfolio-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16/10;
+    background: #ece8e4;
+  }
+
+  .portfolio-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1);
+    transition: transform 0.55s ease;
+  }
+
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.38rem;
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(8, 8, 8, 0.05) 0%, rgba(8, 8, 8, 0.7) 100%);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+
+  .portfolio-chip {
+    display: inline-flex;
+    width: fit-content;
+    border: 1px solid rgba(255, 255, 255, 0.44);
+    border-radius: 999px;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(3px);
+  }
+
+  .portfolio-overlay strong {
+    color: #fff;
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .portfolio-overlay-cta {
+    color: #e8e8e8;
+    font-size: 0.84rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .portfolio-item:hover .portfolio-media img,
+  .portfolio-item:focus-within .portfolio-media img {
+    transform: scale(1.045);
+  }
+
+  .portfolio-item:hover .portfolio-overlay,
+  .portfolio-item:focus-within .portfolio-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .portfolio-content {
+    padding: 1rem 1rem 1.08rem;
+  }
+
+  .portfolio-content h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    color: #181818;
+  }
+
+  .portfolio-role {
+    margin: 0.33rem 0 0;
+    color: #4a4643;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-content p {
+    margin: 0.65rem 0 0;
+    color: #625d59;
+    font-size: 0.93rem;
+    line-height: 1.58;
+  }
+
+  .portfolio-impact {
+    margin-top: 0.72rem;
+    color: #272625;
+    font-weight: 600;
+  }
+
+  .portfolio-premium .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .portfolio-premium .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (min-width: 760px) {
+    .portfolio-premium-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .portfolio-premium-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .portfolio-overlay {
+      opacity: 1;
+      transform: none;
+      background: linear-gradient(180deg, rgba(8, 8, 8, 0.1) 6%, rgba(8, 8, 8, 0.62) 100%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-premium .reveal-on-scroll {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .portfolio-item,
+    .portfolio-item:hover,
+    .portfolio-media img,
+    .portfolio-overlay {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

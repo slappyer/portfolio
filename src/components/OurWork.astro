@@ -1,0 +1,120 @@
+<section class="section work-showcase">
+  <div class="container work-top">
+    <div class="work-intro">
+      <p>Soy experto en generar relevancia, con las redes sociales en el centro de todo lo que hago.</p>
+      <a class="work-cta" href="#portfolio">Ver más</a>
+    </div>
+    <h2 class="work-title">UN VISTAZO A<br />MI TRABAJO</h2>
+  </div>
+
+  <div class="container work-carousel">
+    <button class="work-arrow work-arrow-prev" type="button" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+    </button>
+
+    <div class="work-cards" id="work-cards">
+      <article class="work-card">
+        <a class="work-card-frame work-card-frame--portrait" href="https://www.instagram.com/jpfinancial2024" target="_blank" rel="noreferrer">
+          <img src="/images/jp-financial.png" alt="Campaña publicitaria para JP Financial" loading="lazy" />
+        </a>
+      </article>
+
+      <article class="work-card">
+        <a class="work-card-frame work-card-frame--portrait" href="https://criptomonedas.es" target="_blank" rel="noreferrer">
+          <img src="/images/bitcoin-bus.png" alt="Autobús publicitario de Bitcoin en Madrid" loading="lazy" />
+        </a>
+      </article>
+
+      <article class="work-card">
+        <a class="work-card-frame work-card-frame--portrait" href="https://www.instagram.com/reel/DXZHVAhjR_7/?stkn=MThpbGo2YjU5eDBxaA==" target="_blank" rel="noreferrer">
+          <img src="/images/laureus-2026.jpg" alt="Rafa en los Laureus World Sports Awards Madrid 2026" loading="lazy" />
+        </a>
+      </article>
+
+      <article class="work-card">
+        <a class="work-card-frame work-card-frame--portrait" href="https://www.instagram.com/p/DPV4xU8jZTx/?stkn=a2QzenNzcmZicjl5" target="_blank" rel="noreferrer">
+          <img src="/images/adidas-ball.jpg" alt="Rafa haciendo freestyle de futbol con balon adidas" loading="lazy" />
+        </a>
+      </article>
+
+      <article class="work-card">
+        <a class="work-card-frame work-card-frame--portrait" href="https://www.instagram.com/reel/DbXyiSItlJZ/?stkn=MTNueWh3cG9uNTJzbw==" target="_blank" rel="noreferrer">
+          <img src="/images/rafa-cycling-group.jpg" alt="Rafa en salida de ciclismo en grupo" loading="lazy" />
+        </a>
+      </article>
+    </div>
+
+    <button class="work-arrow work-arrow-next" type="button" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+    </button>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById("work-cards");
+  const prevBtn = document.querySelector(".work-arrow-prev");
+  const nextBtn = document.querySelector(".work-arrow-next");
+
+  if (track && prevBtn && nextBtn) {
+    const scrollByCard = (dir: number) => {
+      const card = track.querySelector(".work-card");
+      const styles = getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap || "0");
+      const amount = card ? card.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+      track.scrollBy({ left: dir * amount, behavior: "smooth" });
+    };
+
+    prevBtn.addEventListener("click", () => scrollByCard(-1));
+    nextBtn.addEventListener("click", () => scrollByCard(1));
+  }
+
+  if (track) {
+    track.addEventListener(
+      "wheel",
+      (event: WheelEvent) => {
+        if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+          event.preventDefault();
+          track.scrollLeft += event.deltaY;
+        }
+      },
+      { passive: false }
+    );
+
+    let isDragging = false;
+    let hasDragged = false;
+    let dragStartX = 0;
+    let scrollStart = 0;
+
+    track.addEventListener("mousedown", (event: MouseEvent) => {
+      isDragging = true;
+      hasDragged = false;
+      track.classList.add("is-dragging");
+      dragStartX = event.pageX;
+      scrollStart = track.scrollLeft;
+    });
+
+    window.addEventListener("mouseup", () => {
+      isDragging = false;
+      track.classList.remove("is-dragging");
+    });
+
+    window.addEventListener("mousemove", (event: MouseEvent) => {
+      if (!isDragging) return;
+      event.preventDefault();
+      const delta = event.pageX - dragStartX;
+      if (Math.abs(delta) > 5) hasDragged = true;
+      track.scrollLeft = scrollStart - delta;
+    });
+
+    track.addEventListener(
+      "click",
+      (event: MouseEvent) => {
+        if (hasDragged) {
+          event.preventDefault();
+          hasDragged = false;
+        }
+      },
+      { capture: true }
+    );
+  }
+</script>
