@@ -175,7 +175,7 @@
     justify-content: center;
     gap: 2rem;
     padding: calc(var(--header-h) + 1.5rem) 1.75rem 2.5rem;
-    background: rgba(8, 8, 8, 0.98);
+    background: #080808;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-12px);
@@ -268,5 +268,17 @@
 
   :global(body.nav-open) {
     overflow: hidden;
+  }
+
+  /* El blur del header al hacer scroll encierra el menu fijo dentro de la barra:
+     se desactiva mientras el menu esta abierto para que ocupe toda la pantalla. */
+  :global(body.nav-open) .site-header,
+  :global(body.nav-open) .site-header.scrolled {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    filter: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 </style>
