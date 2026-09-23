@@ -11,3 +11,13 @@
     </div>
   </div>
 </section>
+
+<style>
+  /* Solo smartphone: el titulo en una sola linea, escalando con el ancho de pantalla */
+  @media (max-width: 680px) {
+    .hero h1 {
+      white-space: nowrap;
+      font-size: clamp(1.2rem, 7vw, 2rem);
+    }
+  }
+</style>
