@@ -1,0 +1,157 @@
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+  <p class="cookie-text">
+    Uso cookies de Google Analytics para saber cuántas personas visitan la web y qué secciones les
+    interesan. Solo se activan si aceptas.
+  </p>
+  <div class="cookie-actions">
+    <button type="button" class="cookie-btn cookie-btn-reject" data-cookie-choice="denied">Rechazar</button>
+    <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-choice="granted">Aceptar</button>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = "slappyer-cookie-consent";
+  const banner = document.getElementById("cookie-banner");
+
+  const readChoice = () => {
+    try {
+      return localStorage.getItem(STORAGE_KEY);
+    } catch {
+      return null;
+    }
+  };
+
+  const saveChoice = (value: string) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, value);
+    } catch {
+      /* navegador sin almacenamiento: se volvera a preguntar en la proxima visita */
+    }
+  };
+
+  const showBanner = () => {
+    if (banner) banner.hidden = false;
+  };
+
+  const hideBanner = () => {
+    if (banner) banner.hidden = true;
+  };
+
+  if (!readChoice()) showBanner();
+
+  banner?.querySelectorAll<HTMLButtonElement>("[data-cookie-choice]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const choice = button.dataset.cookieChoice === "granted" ? "granted" : "denied";
+      saveChoice(choice);
+      hideBanner();
+
+      if (choice === "granted") {
+        (window as any).slappyerLoadAnalytics?.();
+      } else {
+        (window as any).gtag?.("consent", "update", { analytics_storage: "denied" });
+        // Borra las cookies de Analytics que hubiera si antes se habian aceptado
+        const domain = location.hostname.replace(/^www\./, "");
+        document.cookie.split(";").forEach((cookie) => {
+          const name = cookie.split("=")[0].trim();
+          if (name.startsWith("_ga")) {
+            document.cookie = `${name}=; Max-Age=0; path=/`;
+            document.cookie = `${name}=; Max-Age=0; path=/; domain=.${domain}`;
+          }
+        });
+      }
+    });
+  });
+
+  // Cualquier enlace o boton con data-cookie-settings vuelve a abrir el aviso
+  document.querySelectorAll("[data-cookie-settings]").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      showBanner();
+    });
+  });
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 50%;
+    bottom: 1.25rem;
+    z-index: 120;
+    width: min(560px, calc(100% - 2rem));
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1rem 1.1rem 1rem 1.3rem;
+    background: #111;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  }
+
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-text {
+    margin: 0;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .cookie-btn {
+    padding: 0.62rem 1rem;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .cookie-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .cookie-btn-reject {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .cookie-btn-reject:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .cookie-btn-accept {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  @media (max-width: 680px) {
+    .cookie-banner {
+      bottom: 0.75rem;
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+      gap: 0.85rem;
+      padding: 1.1rem;
+    }
+
+    .cookie-actions {
+      justify-content: center;
+    }
+
+    .cookie-btn {
+      flex: 1;
+    }
+  }
+</style>

@@ -36,6 +36,26 @@
         </a>
       </div>
     </div>
-    <p class="footer-copy">slappyer &copy; {new Date().getFullYear()}</p>
+    <p class="footer-copy">
+      slappyer &copy; {new Date().getFullYear()} ·
+      <button type="button" class="footer-cookies" data-cookie-settings>Cookies</button>
+    </p>
   </div>
 </footer>
+
+<style>
+  .footer-cookies {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .footer-cookies:hover {
+    color: #ffb29a;
+  }
+</style>
