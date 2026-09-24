@@ -269,7 +269,7 @@ p {
 .logo-track {
   display: flex;
   width: max-content;
-  animation: logo-scroll 26s linear infinite;
+  animation: logo-scroll 33s linear infinite;
 }
 
 .logo-group {
